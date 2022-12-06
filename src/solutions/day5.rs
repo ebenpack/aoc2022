@@ -1,11 +1,22 @@
 #![allow(unused_variables)]
 
-use regex::Regex;
-use std::collections::VecDeque;
+use regex::{Captures, Regex};
+use std::{collections::VecDeque, str::FromStr};
 
 use crate::AoCDay;
 
 pub struct Code;
+
+fn parse_capture<T>(capture: &Captures, name: &str) -> T
+where
+    T: FromStr,
+{
+    let result = capture.name(name).unwrap().as_str().parse::<T>();
+    match result {
+        Ok(val) => val,
+        _ => panic!(),
+    }
+}
 
 fn solve(
     input: &str,
@@ -34,25 +45,9 @@ fn solve(
             // Part 2
             let capture = re.captures(line).unwrap();
 
-            let num = capture
-                .name("num")
-                .unwrap()
-                .as_str()
-                .parse::<i32>()
-                .unwrap();
-            let from = capture
-                .name("from")
-                .unwrap()
-                .as_str()
-                .parse::<usize>()
-                .unwrap();
-            let to = capture
-                .name("to")
-                .unwrap()
-                .as_str()
-                .parse::<usize>()
-                .unwrap();
-
+            let num = parse_capture::<i32>(&capture, "num");
+            let from = parse_capture::<usize>(&capture, "from");
+            let to = parse_capture::<usize>(&capture, "to");
             mutate_stack(&mut stacks, num, from - 1, to - 1);
         }
     }
