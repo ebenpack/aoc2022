@@ -1,5 +1,4 @@
 use itertools::Itertools;
-use std::collections::HashMap;
 use std::collections::HashSet;
 
 use crate::AoCDay;

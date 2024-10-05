@@ -1,5 +1,3 @@
-#![allow(unused_variables)]
-
 use crate::AoCDay;
 
 pub struct Code;
